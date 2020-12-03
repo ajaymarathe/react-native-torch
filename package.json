@@ -13,11 +13,13 @@
     "native-base": "^2.13.15",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-torch": "^1.2.0"
+    "react-native-torch": "^1.2.0",
+    "react-native-vector-icons": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.12.9",
     "@babel/runtime": "7.12.5",
+    "@bam.tech/react-native-make": "^3.0.0",
     "@react-native-community/eslint-config": "1.1.0",
     "babel-jest": "25.5.1",
     "eslint": "6.8.0",
