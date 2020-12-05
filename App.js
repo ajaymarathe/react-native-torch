@@ -8,19 +8,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ButtonState: false
+      ButtonState: false,
+      background1: '#384D65',
+      background2: '#8181FA',
     };
   }
 
   Flash() {
     if (this.state.ButtonState) {
       this.setState({
-        ButtonState: false
+        ButtonState: false,
+        background1: '#384D65',
+        background2: '#8181FA'
       })
       Torch.switchState(false);
     } else {
       this.setState({
         ButtonState: true,
+        background1: '#8181FA',
+        background2: '#384D65',
       })
       Torch.switchState(true);
     }
@@ -45,12 +51,13 @@ class App extends Component {
   render() {
     return (
       <ScreenView >
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: this.state.background1 }]}>
           <View style={styles.firstView}>
-            <Button style={styles.firstButton} block onPress={() => this.Flash()}>
+            <Button style={[styles.firstButton, { backgroundColor: this.state.background2 }]} block onPress={() => this.Flash()}>
               {this.ToggleButton()}
             </Button>
           </View>
+          <Text style={styles.firstText}>Tap to Turn ON / OFF Flash</Text>
         </View>
       </ScreenView>
     );
@@ -73,13 +80,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    overflow: 'hidden'  
+    overflow: 'hidden'
   },
-  firstButton:{
+  firstButton: {
     height: '100%',
   },
-  flashIcon:{
-    fontSize:70,
+  flashIcon: {
+    fontSize: 70,
     color: 'white'
+  },
+  firstText: {
+    fontSize: 30,
+    fontWeight: '600',
+    color: 'white',
+    marginTop: 20
   }
 })
