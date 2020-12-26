@@ -1,16 +1,26 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import ScreenView from './Components/ScreenView';
 import { Button, View, Text, Icon } from 'native-base';
 import Torch from 'react-native-torch';
 
+const FlashStatus = (status) => {
+  return (
+    <Text style={{ color: '#fff' }}>FLASHLIGHT: {status.status}</Text>
+  );
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ButtonState: false,
-      background1: '#384D65',
-      background2: '#8181FA',
+      flashStatus: 'OFF',
+      PowerButtonBgColor: '#FD7F02',
+      Button2Bg: '#FD7F02',
+      Button3Bg: '#826E5A',
     };
   }
 
@@ -18,46 +28,42 @@ class App extends Component {
     if (this.state.ButtonState) {
       this.setState({
         ButtonState: false,
-        background1: '#384D65',
-        background2: '#8181FA'
-      })
+        flashStatus: 'OFF',
+        PowerButtonBgColor: '#fff',
+      });
       Torch.switchState(false);
     } else {
       this.setState({
         ButtonState: true,
-        background1: '#8181FA',
-        background2: '#384D65',
-      })
+        flashStatus: 'ON',
+        PowerButtonBgColor: '#FD7F02',
+      });
       Torch.switchState(true);
     }
   }
 
-  ToggleButton() {
-    if (this.state.ButtonState) {
-      return (
-        <Text>
-          <Icon style={styles.flashIcon} name="flashlight" />
-        </Text>
-      )
-    } else {
-      return (
-        <Text>
-          <Icon style={styles.flashIcon} name="flashlight-outline" />
-        </Text>
-      )
-    }
-  }
 
   render() {
     return (
       <ScreenView >
-        <View style={[styles.container, { backgroundColor: this.state.background1 }]}>
-          <View style={styles.firstView}>
-            <Button style={[styles.firstButton, { backgroundColor: this.state.background2 }]} block onPress={() => this.Flash()}>
-              {this.ToggleButton()}
+        <View style={styles.container}>
+          <View style={styles.firstSubContainer}>
+            <Icon style={{ color: '#FD7F02', fontSize: 70 }} name="ios-sunny-sharp" />
+            <FlashStatus status={this.state.flashStatus} />
+          </View>
+          <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
+            <Button transparent onPress={() => this.Flash()}>
+              <Icon style={[styles.PowerButton, { color: this.state.PowerButtonBgColor }]} name="ios-power" />
             </Button>
           </View>
-          <Text style={styles.firstText}>Tap to Turn ON / OFF Flash</Text>
+          <View style={{ justifyContent: 'space-around', flexDirection: 'row' }} >
+            <Button style={{ width: '40%', backgroundColor: this.state.Button2Bg }} rounded block>
+              <Text> LED</Text>
+            </Button>
+            <Button rounded style={{ width: '40%', backgroundColor: this.state.Button3Bg }} block>
+              <Text> SCREEN</Text>
+            </Button>
+          </View>
         </View>
       </ScreenView>
     );
@@ -68,10 +74,14 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1, flexDirection: 'column', justifyContent: 'space-around', backgroundColor: '#221E10',
+  },
+  firstSubContainer: {
+    justifyContent: 'center', alignSelf: 'center', alignItems: 'center',
+  },
+  PowerButton: {
+    fontSize: 125,
+    color: 'white',
   },
   firstView: {
     width: 150,
@@ -80,19 +90,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   firstButton: {
     height: '100%',
   },
   flashIcon: {
     fontSize: 70,
-    color: 'white'
+    color: 'white',
   },
   firstText: {
     fontSize: 30,
     fontWeight: '600',
     color: 'white',
-    marginTop: 20
-  }
-})
+    marginTop: 20,
+  },
+});
